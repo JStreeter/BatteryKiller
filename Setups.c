@@ -2,8 +2,11 @@
 #include    <p24Fxxxx.h>
 #include    <uart.h>
 #include    <adc.h>
-#include    "./Setups.h"
+#include    <timer.h>
+#include    <stdio.h>
 
+#include    "./Setups.h"
+#include    "./Gloabals.h"
 
 void UART1_Config(void){
 
@@ -50,17 +53,22 @@ void UART1_Config(void){
     TRISBbits.TRISB2 = 1;//    TRIS_U1RX;
     ANSBbits.ANSB2 = 0;// Made it digital
 
+    printf("UART is Green\n");
     return;
 }
 
 void Setup_12bit_A2D()
 {
 
+    ANSAbits.ANSA0 = 1;
+    ANSAbits.ANSA1 = 1;
     ANSAbits.ANSA2 = 1;
     ANSAbits.ANSA3 = 1;
     ANSBbits.ANSB4 = 1;
     ANSBbits.ANSB12 = 1;
 
+    TRISAbits.TRISA0 = 1;
+    TRISAbits.TRISA1 = 1;
     TRISAbits.TRISA2 = 1;
     TRISAbits.TRISA3 = 1;
     TRISBbits.TRISB4 = 1;
@@ -82,7 +90,7 @@ void Setup_12bit_A2D()
                 ADC_BUF_REG_ENABLE      &
                 ADC_OFFSET_CAL_OFF      &
                 ADC_SCAN_ON             &
-                ADC_INTR_4_CONV         & //soon
+                ADC_INTR_6_CONV         & //soon
                 ADC_ALT_BUF_OFF         &
                 ADC_ALT_INPUT_OFF
             ),
@@ -106,8 +114,8 @@ void Setup_12bit_A2D()
                0//Skips All //AD1CTMUENH
             ),
             (
-                ADC_SKIP_SCAN_AN0 &
-                ADC_SKIP_SCAN_AN1 &
+                ADC_SCAN_AN0 &
+                ADC_SCAN_AN1 &
                 ADC_SKIP_SCAN_AN2 &
                 ADC_SKIP_SCAN_AN3 &
                 ADC_SKIP_SCAN_AN4 &
@@ -134,16 +142,25 @@ void Setup_12bit_A2D()
             )
     );
 
-    /*
-     * unsigned int config1,AD1CON1
-     * unsigned int config2,AD1CON2
-     * unsigned int config3,AD1CON3
-     * unsigned int config4,AD1CON5
-     * unsigned int configctmu_low,AD1CTMUENL
-     * unsigned int configctmu_high,AD1CTMUENH
-     * unsigned int configscan_low,AD1CSSL
-     * unsigned int configscan_high,AD1CSSH
-    */
-    SetChanADC10( ADC_CH0_POS_SAMPLEA_AN12 & ADC_CH0_NEG_SAMPLEA_VREFN );
+
+    printf("A2D is Green\n");
+    return;
+}
+
+void TimerSetup(void)
+{
+    OpenTimer1(
+            (
+            T1_ON &
+            T1_IDLE_CON &
+            T1_GATE_OFF &
+            T1_PS_1_64 &
+            T1_SYNC_EXT_OFF &
+            T1_SOURCE_INT
+            ),
+            TIMERONEPERIOD);          //every .001sec
+    printf("Timer1 is Green\n");
+    ConfigIntTimer1(T1_INT_PRIOR_1 & T1_INT_ON);
+
     return;
 }

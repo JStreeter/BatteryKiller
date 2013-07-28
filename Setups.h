@@ -20,6 +20,8 @@ extern "C"
 
 void UART1_Config(void);
 void Setup_12bit_A2D(void);
+void TimerSetup(void);
+void InitChip(void);
 
 #ifdef	__cplusplus
 }
