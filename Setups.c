@@ -55,37 +55,48 @@ void UART1_Config(void){
 
 void Setup_12bit_A2D()
 {
+
+    ANSAbits.ANSA2 = 1;
+    ANSAbits.ANSA3 = 1;
+    ANSBbits.ANSB4 = 1;
+    ANSBbits.ANSB12 = 1;
+
+    TRISAbits.TRISA2 = 1;
+    TRISAbits.TRISA3 = 1;
+    TRISBbits.TRISB4 = 1;
+    TRISBbits.TRISB12 = 1;
+
     OpenADC10(
             (
-                ADC_MODULE_ON &    /*A/D Converter on */
-                ADC_IDLE_STOP &     /* A/D Stop in Idle mode */
-                ADC_12BIT_MODE &
+                ADC_MODULE_ON   &    /*A/D Converter on */
+                ADC_IDLE_STOP   &     /* A/D Stop in Idle mode */
+                ADC_12BIT_MODE  &
                 ADC_FORMAT_INTG &
-                ADC_TRIG_AUTO &
+                ADC_TRIG_AUTO   &
                 ADC_AUTO_SAMPLING_OFF &
                 ADC_SAMP_OFF
             ),
             (
-                ADC_POS_VREF_INT_VRH2 & //4 * BandGap reference... Needs >4.5 volts for the thing to work
-                ADC_NEG_VREF_AVSS &
-                ADC_BUF_REG_DISABLE &
-                ADC_OFFSET_CAL_OFF &
-                ADC_SCAN_ON &
-                ADC_INTR_EACH_CONV &//ADC_INTR_6_CONV & //soon
-                ADC_ALT_BUF_OFF &
+                ADC_POS_VREF_INT_VRH2   & //4 * BandGap reference... Needs >4.5 volts for the thing to work
+                ADC_NEG_VREF_AVSS       &
+                ADC_BUF_REG_ENABLE      &
+                ADC_OFFSET_CAL_OFF      &
+                ADC_SCAN_ON             &
+                ADC_INTR_4_CONV         & //soon
+                ADC_ALT_BUF_OFF         &
                 ADC_ALT_INPUT_OFF
             ),
             (
-                ADC_CONV_CLK_INTERNAL_RC &
-                ADC_SAMPLE_TIME_31 &
+                ADC_CONV_CLK_INTERNAL_RC    &
+                ADC_SAMPLE_TIME_31          &
                 ADC_CONV_CLK_42Tcy
             ),
             (
-                ADC_AUTO_SCAN_DISABLE &
-                ADC_LOW_POWER_DISABLE &
-                ADC_CTMU_DISABLE &
-                ADC_BG_ENABLE &
-                ADC_WRITE_LEGACY &
+                ADC_AUTO_SCAN_ENABLE   &
+                ADC_LOW_POWER_DISABLE   &
+                ADC_CTMU_DISABLE        &
+                ADC_BG_ENABLE           &
+                ADC_WRITE_LEGACY        &
                 ADC_CMP_LESS_MODE
             ),
             (
@@ -108,9 +119,9 @@ void Setup_12bit_A2D()
                 ADC_SKIP_SCAN_AN10 &
                 ADC_SKIP_SCAN_AN11 &
                 ADC_SCAN_AN12 &
-                ADC_SKIP_SCAN_AN13 &
-                ADC_SKIP_SCAN_AN14 &
-                ADC_SKIP_SCAN_AN15
+                ADC_SCAN_AN13 &
+                ADC_SCAN_AN14 &
+                ADC_SCAN_AN15
             ),
             (
                 ADC_SKIP_SCAN_AN16 &
