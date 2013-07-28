@@ -1,8 +1,4 @@
 #MPLABX
-*.bash
-*.mk
-*.xml
-*.properties
 *.o
 *.o.d
 *.cof
