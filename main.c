@@ -30,7 +30,7 @@ _FDS( DSWDTPS_DSWDTPS5 & DSWDTOSC_LPRC & DSBOREN_OFF & DSWDTEN_OFF )
 int main(int argc, char** argv)
 {
     DWORD i;
-    
+    WORD RawA2D;
     //Speed
     CLKDIVbits.RCDIV = 0;           //Default is 4 Mhz... This iS 8 Mhz
     __builtin_write_OSCCONH(0x01);  //Change the secondary clock to 8MHz with Pll
@@ -41,21 +41,16 @@ int main(int argc, char** argv)
     //End of Speed
 
     UART1_Config();
+    Setup_12bit_A2D();
+    printf("Good morning Master\r\n");
 
-
-
-    
-    ANSA = 0;
-    ANSB = 0;
-
-    TRISA = 0;
-    TRISB = 0;
     while(1)
     {
-        //LATA ^= 0xFFFF;
-        //LATB ^= 0xFFFF;
-        printf("Hello World\r\n");
-        for(i = 0; i<1000;i++);
+        AD1CON1bits.SAMP = 1;
+        while(!AD1CON1bits.DONE);
+        RawA2D = ReadADC10(0);
+        printf("%u\r\n",RawA2D);
+        for(i = 0; i<5000;i++);
     }
 
     return (EXIT_SUCCESS);

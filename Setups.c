@@ -55,6 +55,84 @@ void UART1_Config(void){
 
 void Setup_12bit_A2D()
 {
+    OpenADC10(
+            (
+                ADC_MODULE_ON &    /*A/D Converter on */
+                ADC_IDLE_STOP &     /* A/D Stop in Idle mode */
+                ADC_12BIT_MODE &
+                ADC_FORMAT_INTG &
+                ADC_TRIG_AUTO &
+                ADC_AUTO_SAMPLING_OFF &
+                ADC_SAMP_OFF
+            ),
+            (
+                ADC_POS_VREF_INT_VRH2 & //4 * BandGap reference... Needs >4.5 volts for the thing to work
+                ADC_NEG_VREF_AVSS &
+                ADC_BUF_REG_DISABLE &
+                ADC_OFFSET_CAL_OFF &
+                ADC_SCAN_ON &
+                ADC_INTR_EACH_CONV &//ADC_INTR_6_CONV & //soon
+                ADC_ALT_BUF_OFF &
+                ADC_ALT_INPUT_OFF
+            ),
+            (
+                ADC_CONV_CLK_INTERNAL_RC &
+                ADC_SAMPLE_TIME_31 &
+                ADC_CONV_CLK_42Tcy
+            ),
+            (
+                ADC_AUTO_SCAN_DISABLE &
+                ADC_LOW_POWER_DISABLE &
+                ADC_CTMU_DISABLE &
+                ADC_BG_ENABLE &
+                ADC_WRITE_LEGACY &
+                ADC_CMP_LESS_MODE
+            ),
+            (
+              0 //Skips All //AD1CTMUENL
+            ),
+            (
+               0//Skips All //AD1CTMUENH
+            ),
+            (
+                ADC_SKIP_SCAN_AN0 &
+                ADC_SKIP_SCAN_AN1 &
+                ADC_SKIP_SCAN_AN2 &
+                ADC_SKIP_SCAN_AN3 &
+                ADC_SKIP_SCAN_AN4 &
+                ADC_SKIP_SCAN_AN5 &
+                ADC_SKIP_SCAN_AN6 &
+                ADC_SKIP_SCAN_AN7 &
+                ADC_SKIP_SCAN_AN8 &
+                ADC_SKIP_SCAN_AN9 &
+                ADC_SKIP_SCAN_AN10 &
+                ADC_SKIP_SCAN_AN11 &
+                ADC_SCAN_AN12 &
+                ADC_SKIP_SCAN_AN13 &
+                ADC_SKIP_SCAN_AN14 &
+                ADC_SKIP_SCAN_AN15
+            ),
+            (
+                ADC_SKIP_SCAN_AN16 &
+                ADC_SKIP_SCAN_AN17 &
+                ADC_SKIP_SCAN_AN26 &
+                ADC_SKIP_SCAN_AN27 &
+                ADC_SKIP_SCAN_AN28 &
+                ADC_SKIP_SCAN_AN29 &
+                ADC_SKIP_SCAN_AN30
+            )
+    );
 
+    /*
+     * unsigned int config1,AD1CON1
+     * unsigned int config2,AD1CON2
+     * unsigned int config3,AD1CON3
+     * unsigned int config4,AD1CON5
+     * unsigned int configctmu_low,AD1CTMUENL
+     * unsigned int configctmu_high,AD1CTMUENH
+     * unsigned int configscan_low,AD1CSSL
+     * unsigned int configscan_high,AD1CSSH
+    */
+    SetChanADC10( ADC_CH0_POS_SAMPLEA_AN12 & ADC_CH0_NEG_SAMPLEA_VREFN );
     return;
 }

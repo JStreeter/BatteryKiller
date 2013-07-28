@@ -19,6 +19,7 @@ extern "C"
 #define __BAUDUART1_ ((__FTCY_/(4*__U1BAUD_))-1)
 
 void UART1_Config(void);
+void Setup_12bit_A2D(void);
 
 #ifdef	__cplusplus
 }
