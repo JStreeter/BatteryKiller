@@ -18,7 +18,7 @@
 //#include    "/Setups.h"
 #include    "./Setups.h"
 _FBS(BWRP_OFF & BSS_OFF )
-_FOSCSEL( FNOSC_FRC & IESO_OFF )
+_FOSCSEL( FNOSC_FRC & SOSCSRC_ANA & IESO_OFF & LPRCSEL_HP )
 _FOSC( POSCMOD_HS & OSCIOFNC_OFF & FCKSM_CSECMD & SOSCSEL_SOSCLP )
 _FWDT( WDTPS_PS32768 & FWPSA_PR128 & FWDTEN_OFF & WINDIS_OFF )
 _FPOR( BOREN_BOR0 & PWRTEN_OFF & I2C1SEL_PRI & BORV_V20 & MCLRE_ON )
@@ -29,7 +29,7 @@ _FDS( DSWDTPS_DSWDTPS5 & DSWDTOSC_LPRC & DSBOREN_OFF & DSWDTEN_OFF )
  */
 int main(int argc, char** argv)
 {
-    DWORD i;
+    DWORD i,SampleCount;
     WORD RawA2D;
     //Speed
     CLKDIVbits.RCDIV = 0;           //Default is 4 Mhz... This iS 8 Mhz
@@ -43,13 +43,23 @@ int main(int argc, char** argv)
     UART1_Config();
     Setup_12bit_A2D();
     printf("Good morning Master\r\n");
+    SampleCount = 0;
+
+    //Twiddle Test
+
+    while(1)
+    {
+        //Twiddle Test
+
+    }
+
 
     while(1)
     {
         AD1CON1bits.SAMP = 1;
         while(!AD1CON1bits.DONE);
         RawA2D = ReadADC10(0);
-        printf("%u\r\n",RawA2D);
+        printf("%8lu, %4u,\r\n",SampleCount++,RawA2D);
         for(i = 0; i<5000;i++);
     }
 
