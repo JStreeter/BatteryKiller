@@ -1,6 +1,6 @@
 #Battery Killer
-
-
+-----------------------
+###I/O Lines and Fetures
 *6 Analog lines
     *3 For High Current Drain
     *3 For Low Current Drain
@@ -11,3 +11,4 @@
     *115200
     *8N1
     *Idle High
+-------
