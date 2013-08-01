@@ -125,9 +125,9 @@ void Setup_12bit_A2D()
                 ADC_SKIP_SCAN_AN8 &
                 ADC_SKIP_SCAN_AN9 &
                 ADC_SKIP_SCAN_AN10 &
-                ADC_SKIP_SCAN_AN11 &
+                ADC_SCAN_AN11 &
                 ADC_SCAN_AN12 &
-                ADC_SCAN_AN13 &
+                ADC_SKIP_SCAN_AN13 &
                 ADC_SCAN_AN14 &
                 ADC_SCAN_AN15
             ),
@@ -151,7 +151,7 @@ void TimerSetup(void)
 {
     OpenTimer1(
             (
-            T1_ON &
+            T1_OFF &
             T1_IDLE_CON &
             T1_GATE_OFF &
             T1_PS_1_64 &

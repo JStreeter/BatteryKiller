@@ -51,7 +51,7 @@ int main(int argc, char** argv)
     ReadADC10(0);
     ReadADC10(1);
     ReadADC10(12);
-    ReadADC10(13);
+    ReadADC10(11);
     ReadADC10(14);
     ReadADC10(15);
 
@@ -60,13 +60,22 @@ int main(int argc, char** argv)
     IFS0bits.AD1IF = 0;//Reload the Round
 
     TimerSetup();//After the first proc it fires the A2D
+
+    for(i = 6500000;i>1;i--);
+    for(i = 6500000;i>1;i--);
+    for(i = 6500000;i>1;i--);
+    for(i = 6500000;i>1;i--);
+    for(i = 6500000;i>1;i--);
+    for(i = 6500000;i>1;i--);
+
+    T1CONbits.TON = 1;
     while(1)
     {
         IFS0bits.AD1IF = 0;//Reload the Round
         printf("%lu,",SampleCount++);//Good use of time to print counter
         while(IFS0bits.AD1IF != 1);//Waiting for all the conversions to finish
-        printf("%d,%u,%u,%u,%d,%u,%u,%u,\n",LowI_Line,ReadADC10(0),ReadADC10(1),ReadADC10(12),
-                                        HighI_Line,ReadADC10(13),ReadADC10(14),ReadADC10(15));//And PRINT
+        printf("%d,%u,%u,%u,%d,%u,%u,%u,\n",LowI_Line,ReadADC10(0),ReadADC10(1),ReadADC10(14),
+                                        HighI_Line,ReadADC10(15),ReadADC10(12),ReadADC10(11));//And PRINT
        
     }//AGAIN
 
